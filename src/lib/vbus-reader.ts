@@ -1,4 +1,4 @@
-import {Packet, SerialConnection, Specification} from 'resol-vbus';
+import {Packet, TcpConnection, Specification} from 'resol-vbus';
 import {myLogger} from '../logger';
 import {DeviceNode, HomieMqttServerConfig} from './interfaces';
 import {from, Subject, throwError} from 'rxjs';
@@ -13,12 +13,11 @@ const temperatureSensor3 = 'Temperature sensor 3';
 const whitelist = [
     pumpSpeedRelay1,
     temperatureSensor1,
-    temperatureSensor2,
-    temperatureSensor3
+    temperatureSensor2
 ];
 
 export class VbusReader {
-    readonly connection: SerialConnection;
+    readonly connection: TcpConnection;
     private readonly specification = Specification.getDefaultSpecification();
     private homieDevice: HomieDevice | undefined = undefined;
     private vbusInfos$$ = new Subject<VbusFieldInfo[]>();
@@ -28,8 +27,9 @@ export class VbusReader {
     }
 
     constructor(path: string, private mqttConfig: HomieMqttServerConfig) {
-        this.connection = new SerialConnection({
-            path: path,
+        this.connection = new TcpConnection({
+            host: path,
+            password: "vbus"
         });
         this.init();
     }

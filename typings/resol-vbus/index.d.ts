@@ -18,6 +18,17 @@ declare module 'resol-vbus' {
         path: string;
     }
 
+    export class TcpConnection extends Duplex {
+        constructor(options: TcpConnectionOptions);
+
+        connect(): Promise<void>;
+    }
+
+    export interface TcpConnectionOptions {
+        host: string;
+        password: string;
+    }
+
     export interface PacketFields {
         id: string;
         packet: Packet;

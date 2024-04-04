@@ -2,12 +2,12 @@ import {HomieMqttServerConfig} from './lib/interfaces';
 import {VbusReader} from './lib/vbus-reader';
 
 export const mqttConfig: HomieMqttServerConfig = {
-    brokerUrl: 'mqtt://192.168.188.4',
-    username: '',
-    password: '',
+    brokerUrl: 'mqtt://192.168.0.45',
+    username: 'mqtt',
+    password: 'password',
     homieBaseTopic: 'homie'
 };
 
-const path = '192.168.188.22';
+const path = '/dev/virtualcom0';
 
 VbusReader.start(path, mqttConfig);
